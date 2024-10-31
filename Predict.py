@@ -1,11 +1,12 @@
-# prompt: give me a code with the predictive price of the top five companies S&P500 with graph
-
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
-# Define the top 5 S&P 500 companies (replace with your desired tickers)
-tickers = ['AAPL', 'MSFT', 'AMZN', 'GOOG', 'TSLA']
+# Define the top 3 S&P 500 companies
+tickers = ['AAPL', 'MSFT', 'GOOGL']  # Adjust tickers as needed
 
 # Download historical data
 data = yf.download(tickers, period="5y")  # Adjust the period as needed
@@ -20,24 +21,19 @@ returns = adj_close.pct_change()
 rolling_mean = returns.rolling(window=20).mean()  # Adjust the window as needed
 rolling_std = returns.rolling(window=20).std()
 
-# Plot the results
+# Plot the adjusted closing prices
 plt.figure(figsize=(14, 7))
 for ticker in tickers:
-  plt.plot(adj_close.index, adj_close[ticker], label=ticker)
+    plt.plot(adj_close.index, adj_close[ticker], label=ticker)
 
 plt.xlabel('Date')
 plt.ylabel('Adjusted Closing Price')
-plt.title('Adjusted Closing Price of Top 5 S&P 500 Companies')
+plt.title('Adjusted Closing Price of Top 3 S&P 500 Companies')
 plt.legend()
 plt.grid(True)
 plt.show()
 
-# Predictive modeling (simple example using linear regression) - requires further refinement
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-
-
-# Example for AAPL (repeat for other tickers)
+# Predictive modeling for AAPL (you can repeat for other tickers)
 X = np.arange(len(adj_close['AAPL'])).reshape(-1, 1)  # Use index as predictor
 y = adj_close['AAPL'].values.reshape(-1, 1)
 
@@ -49,13 +45,14 @@ predictions = model.predict(X_test)
 
 # Plot the predictions against actual values
 plt.figure(figsize=(10, 6))
-plt.scatter(X_test, y_test, label='Actual Prices')
+plt.scatter(X_test, y_test, label='Actual Prices', color='blue')
 plt.plot(X_test, predictions, color='red', label='Predicted Prices')
 
 plt.xlabel('Time Index')
 plt.ylabel('Adjusted Close Price')
 plt.title('Linear Regression Prediction for AAPL')
 plt.legend()
+plt.grid(True)
 plt.show()
 
 print("Note: This is a very basic linear regression example. For more accurate predictions, consider using more sophisticated models, adding more features, and handling time series data appropriately.")
