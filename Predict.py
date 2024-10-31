@@ -1,8 +1,12 @@
-!pip install yfinance
-
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+!pip install yfinance
+
 
 # Define the top 5 S&P 500 companies (replace with your desired tickers)
 tickers = ['AAPL', 'MSFT', 'AMZN', 'GOOG', 'TSLA']
@@ -33,8 +37,6 @@ plt.grid(True)
 plt.show()
 
 # Predictive modeling (simple example using linear regression) - requires further refinement
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
 
 
 # Example for AAPL (repeat for other tickers)
