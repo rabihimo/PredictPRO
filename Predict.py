@@ -9,7 +9,7 @@ import pandas as pd
 st.set_page_config(layout="wide", page_title="WebApp_Demo")
 
 st.sidebar.title("Input")
-symbol = st.sidebar.text_input('Please enter the stock symbol: ', 'NVDA').upper()
+symbol = st.sidebar.input('Please enter the stock symbol: ', 'NVDA').upper()
 
 col1, col2 = st.sidebar.columns(2, gap="medium")
 with col1:
